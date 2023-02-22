@@ -18,7 +18,7 @@ const Login = () => {
 
     axios
       .post("/api/v1/auth/register", temp)
-      .then((res) => {
+      .then((res) => { 
         console.log(res);
         // nav("/todoform");
         nav("/protected");

@@ -1,11 +1,15 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useState , useContext} from "react";
+// import Temp from "../context/Context"
 import { Link, useNavigate } from "react-router-dom";
+import {useUserContext} from "../context/Context";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const { user, setUser} = useUserContext();
+  
   const nav = useNavigate();
 
   const onSubmit = async (e) => {
@@ -15,14 +19,17 @@ const Login = () => {
     axios
       .post("/api/v1/auth/login", temp)
       .then((res) => {
-        console.log(res);
-        nav("/todoform");
+        console.log(res.data.user);          
+          nav("/todoform");
+        
       })
       .catch((error) => {
         const err = error.response;
+        console.log(error)
         if (err && err.status === 400) {
           setError(err.data.msg);
         } else {
+          console.log(err)
           setError(error.response.data.error);
           console.log(error);
         }

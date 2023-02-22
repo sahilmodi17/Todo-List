@@ -7,7 +7,8 @@ const addTask = async (req, res) => {
     let dbId = await Task.findOne({ createdId: req.user.userId });
     const { taskid, task } = req.body;
 
-    if (dbId) {
+    if (dbId) {      
+
       dbId.tasks.push({ taskid: taskid, task: task });
       await dbId.save();
       return res.status(200).json(dbId);
@@ -33,9 +34,9 @@ const getAllTasks = async (req, res) => {
     let t1 = task.map((t) => {
       return t.tasks;
     });
-    console.log(task);
+    // console.log(task);
 
-    return res.json(task);
+    return res.json({ user: req.user, task });
   } catch (error) {
     console.log(error);
     res.status(400).json({ msg: "something went wrong..." });
@@ -49,13 +50,13 @@ const deleteTask = async (req, res) => {
       user: { userId },
       params: { id: taskId },
     } = req;
-    
+
     const deleted = await Task.findOneAndUpdate(
-      { createdId : userId },
+      { createdId: userId },
       { $pull: { tasks: { taskid: taskId } } },
       { safe: true }
     ).clone();
-    console.log(deleted)
+    console.log(deleted);
     if (!deleted) {
       throw new Error("error while deleting");
     }
