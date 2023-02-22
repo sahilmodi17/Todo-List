@@ -5,7 +5,6 @@ import Todo from "./Todo";
 import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
 
-
 const TodoForm = () => {
   const [task, setTask] = useState("");
   // const [taskid, setTaskid] = useState("");
@@ -13,15 +12,10 @@ const TodoForm = () => {
   const [sub, setSub] = useState(false);
 
   useEffect(() => {
-    //check token
-    console.log("hiii");
-
-    // if token valid setvalid -> true
-    // get all tasks for particular user based on token
     axios
       .get("/api/v1/getalltasks")
       .then((res) => {
-        console.log(res.data.task[0].tasks)
+        console.log(res.data.task[0].tasks);
         setTodos(res.data.task[0].tasks);
         // console.log(todos)
       })
@@ -36,7 +30,7 @@ const TodoForm = () => {
     // console.log(task + " " + taskid);
     const taskid = uuidv4();
 
-    const temp = {task , taskid};
+    const temp = { task, taskid };
     axios
       .post("/api/v1/create", temp)
       .then((res) => {
@@ -45,8 +39,8 @@ const TodoForm = () => {
       })
       .catch((err) => console.log(err));
 
-      setSub(false)
-      reset();
+    setSub(false);
+    // reset();
   };
 
   // console.log(text);
@@ -60,17 +54,14 @@ const TodoForm = () => {
           className="input"
           onChange={(e) => setTask(e.target.value)}
         />
-        
-
-        <button className="btn" type="button" onClick={onFormSubmit}>
-          submit
-        </button>
-        {todos.map((t,i)=>{
-          return (
-            <Todo key={i} />
-          )
-        })
-      }
+        <div className="w-[100%]  flex justify-center">
+          <button className=" bg-gray-500 hover:bg-gray-700 mt-2 mb-4 text-white font-bold py-2 px-4 border border-gray-800 rounded w-[50%]" onClick={onFormSubmit}>
+            Submit
+          </button>
+        </div>
+        {todos.map((todo, i) => {
+          return <Todo key={i} todo={todo} />;
+        })}
       </form>
     </>
   );

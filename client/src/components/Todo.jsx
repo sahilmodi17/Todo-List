@@ -1,8 +1,12 @@
 import React from 'react'
 
-const Todo = () => {
+const Todo = ({todo}) => {
   return (
-    <div>Todo</div>
+    <>
+      <div className="container bg-slate-400 border-2 rounded-xl p-2 px-7 text-xl my-1.5" >
+        {todo.task}
+      </div>
+    </>
   )
 }
 
