@@ -11,7 +11,7 @@ const Login = () => {
   const [error, setError] = useState("");
   const nav = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e) => { 
     e.preventDefault();
 
     const temp = { name, email, password };
@@ -20,8 +20,7 @@ const Login = () => {
       .post("/api/v1/auth/register", temp)
       .then((res) => { 
         console.log(res);
-        // nav("/todoform");
-        nav("/protected");
+        nav("/todoform");
       })
       .catch((error) => {
         const err = error.response;

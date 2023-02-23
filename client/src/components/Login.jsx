@@ -21,7 +21,6 @@ const Login = () => {
       .then((res) => {
         console.log(res.data.user);          
           nav("/todoform");
-        
       })
       .catch((error) => {
         const err = error.response;
