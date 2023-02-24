@@ -16,6 +16,7 @@ const Login = () => {
 
     const temp = { name, email, password };
 
+    // register api 
     axios
       .post("/api/v1/auth/register", temp)
       .then((res) => { 

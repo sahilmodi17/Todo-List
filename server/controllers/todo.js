@@ -31,10 +31,6 @@ const getAllTasks = async (req, res) => {
       "createdAt"
     );
 
-    let t1 = task.map((t) => {
-      return t.tasks;
-    });
-    // console.log(task);
 
     return res.json({ user: req.user, task });
   } catch (error) {
@@ -45,12 +41,13 @@ const getAllTasks = async (req, res) => {
 };
 
 const deleteTask = async (req, res) => {
-  try {
+  try { 
     const {
       user: { userId },
       params: { id: taskId },
     } = req;
-
+    console.log(taskId)
+    // const temp = 
     const deleted = await Task.findOneAndUpdate(
       { createdId: userId },
       { $pull: { tasks: { taskid: taskId } } },
@@ -58,9 +55,9 @@ const deleteTask = async (req, res) => {
     ).clone();
     console.log(deleted);
     if (!deleted) {
-      throw new Error("error while deleting");
+      throw new Error("Error While Deleting");
     }
-    res.send({ msg: "task deleted" });
+    res.send({ msg: "Task Deleted Successfully" });
   } catch (error) {
     res.status(400).json({ msg: "somthing went wrong..." });
   }
@@ -72,7 +69,7 @@ const updateTask = async (req, res) => {
       user: { userId },
       params: { id: taskId },
     } = req;
-
+    console.log("update")
     const updated = await Task.updateOne(
       {
         tasks: { $elemMatch: { taskid: taskId } },

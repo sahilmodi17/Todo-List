@@ -1,6 +1,5 @@
 import axios from "axios";
-import React, { useState , useContext} from "react";
-// import Temp from "../context/Context"
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {useUserContext} from "../context/Context";
 
@@ -8,7 +7,7 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const { user, setUser} = useUserContext();
+
   
   const nav = useNavigate();
 
@@ -16,6 +15,7 @@ const Login = () => {
     e.preventDefault();
     const temp = { email, password };
 
+    // login api
     axios
       .post("/api/v1/auth/login", temp)
       .then((res) => {
